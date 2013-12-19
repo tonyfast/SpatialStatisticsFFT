@@ -70,9 +70,17 @@ function [T xx] = f2( A1,A2, varargin)
 %
 % 'Mask' - [N1xN2xN3] logical -populates Mask1 and Mask2 with the same
 % mask.
+%
+% if varargin is a structure with all the parameter fields then the
+% parameters are automatically defined and not decided.  This is useful in
+% repetative applications.
 
 %% Initialize Critical Data Elements
-param = setparam(varargin, size(A1));
+if numel(varargin) == 1 && isstruct( varargin )
+    param = varargin;
+else
+    param = setparam(varargin, size(A1));
+end
 
 %%
 % Decide whether the correlation is an auto or cross correlation
