@@ -71,6 +71,8 @@ function [T xx] = f2( A1,A2, varargin)
 % 'Mask' - [N1xN2xN3] logical -populates Mask1 and Mask2 with the same
 % mask.
 %
+%  'shift' - logical - true - if true performs the fftshift.
+%
 % if varargin is a structure with all the parameter fields then the
 % parameters are automatically defined and not decided.  This is useful in
 % repetative applications.
@@ -147,13 +149,38 @@ end
 if ndims(T) >= 3
     T(:,:,incut{3}) = [];
 end
-xx.values = arrayfun( @(x)xx.values{x}(~incut{x}),1:ndims(T),'UniformOutput',false);
+
+if param.shift
+    xx.values = arrayfun( @(x)fftshift(xx.values{x}(~incut{x})),1:ndims(T),'UniformOutput',false);
+    T(:) = fftshift(T);
+else
+    xx.values = arrayfun( @(x)xx.values{x}(~incut{x}),1:ndims(T),'UniformOutput',false);
+end
 
 %% Display the statistics
+% The shifted image is the more canonical form to view the statistics in.
+% In fact surface is the optimum viewing tools because then you can use
+% the datatip to find probabilities for certain vectors.
+%
 if param.display
     % When the statistics are visualized, the outputs are
     % forced to be real, this result should be removed
-    pcolor(fftshift(xx.values{2}),fftshift(xx.values{1}),fftshift(real(T))); colorbar; shading flat
+    switch ndims( A1 )
+        case 2
+            if param.shift
+                pcolor(xx.values{2},xx.values{1},real(T)); 
+            else
+                pcolor(fftshift(xx.values{2}),fftshift(xx.values{1}),fftshift(real(T))); 
+            end
+            xlabel('t_x','Fontsize',16); ylabel('t_y','Fontsize',16, 'Rotation',0); 
+            hc = colorbar; shading flat; axis equal
+            if param.normalize
+                str = 'Probability density';
+            else
+                str = 'Counts';
+            end
+            set( get( hc, 'Ylabel'), 'String', str, 'Fontsize',16,'Rotation',270,'VerticalAlignment','Bottom');
+    end
 end
 
 
@@ -170,7 +197,8 @@ param = struct('normalize',true, ...
     'auto',true,...
     'periodic',false*ones(1,numel(sz)),...
     'Mask1',[],...
-    'Mask2',[] );
+    'Mask2',[], ...
+    'shift', false);
 
 
 fldnm = fieldnames( param );
