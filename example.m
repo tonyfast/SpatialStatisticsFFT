@@ -34,7 +34,7 @@ addpath( './Codes' );
 addpath( './examples/Data' );
 % Read in an Alpha Beta titanium micrograph from Hamish Fraser at OSU.
 information = double(imread( 'LowQuality.png'));
- return
+
 %% Encode the information
 
 % the image has been compressed and has artifacts.  black phase is alpha (0)
@@ -139,5 +139,3 @@ axis equal; shading flat; hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
 figure(gcf)
 
 %% References
-
-
