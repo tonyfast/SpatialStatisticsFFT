@@ -16,7 +16,7 @@
 % <www.slideshare.net/tonyfast1 SlideShare>
 % presenting applications of spatial statistics.
 %
-% <<MINEDlogo.PNG>>
+% <<MINEDlogo.png>>
 %
 % Spatial statistics provide an objective and scalable representation of
 % materials science information that can be embedded into machine learning
