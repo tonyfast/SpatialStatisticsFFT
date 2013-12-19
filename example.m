@@ -11,7 +11,7 @@
 % structure-property-processing knowledge from materials science
 % information.  
 %
-% <www.linkedin.com/pub/tony-fast/38/8b0/639/ Tony Fast>
+% <http://orcid.org/0000-0001-9353-0382 Tony Fast>
 % has some presentations up on 
 % <www.slideshare.net/tonyfast1 SlideShare>
 % presenting applications of spatial statistics.
@@ -25,13 +25,16 @@
 % An HTML view of this page can be found on 
 % <http://htmlpreview.github.io/?https://github.com/tonyfast/Spatial_Statistics/blob/master/html/example.html GitHub> 
 % .
+%
+% _Currently, a research paper is being written to support the codes in
+% this repository._
 
 %% Example Dataset
 addpath( './Codes' );
 addpath( './examples/Data' );
 % Read in an Alpha Beta titanium micrograph from Hamish Fraser at OSU.
 information = double(imread( 'LowQuality.png'));
- 
+ return
 %% Encode the information
 
 % the image has been compressed and has artifacts.  black phase is alpha (0)
@@ -135,6 +138,6 @@ axis equal; shading flat; hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
     'Counts(tail = beta, head = beta )','Fontsize',16);
 figure(gcf)
 
-
+%% References
 
 
