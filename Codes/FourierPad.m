@@ -1,7 +1,7 @@
 function fA = FourierPad( A, osz, nsz );
 
 if all( osz == nsz )
-    fA = A;
+    fA = double(A);
 else
     switch numel(nsz)
         case 1
