@@ -1,13 +1,37 @@
-%% An html view can be found at 
-% http://htmlpreview.github.io/?https://github.com/tonyfast/Spatial_Statistics/blob/master/html/example.html
-
-addpath( './Codes' );
-addpath( './examples/Data' );
+%% f2 :: A function to compute spatial statistics
+%
+% Spatial statistics are a statistical quantification use for materials
+% science information.  This page explains the use cases for the function.
+%
+% All of this work has been developed over the course of a decade by Surya 
+% Kalidindi's 
+% <http://mined.gatech.edu MINED research group>.
+% The MINED
+% research group is developing data driven methods to extract
+% structure-property-processing knowledge from materials science
+% information.  
+%
+% <www.linkedin.com/pub/tony-fast/38/8b0/639/ Tony Fast>
+% has some presentations up on 
+% <www.slideshare.net/tonyfast1 SlideShare>
+% presenting applications of spatial statistics.
+%
+% <<MINEDlogo.PNG>>
+%
+% Spatial statistics provide an objective and scalable representation of
+% materials science information that can be embedded into machine learning
+% and regression solvers.
+%
+% An HTML view of this page can be found on 
+% <http://htmlpreview.github.io/?https://github.com/tonyfast/Spatial_Statistics/blob/master/html/example.html GitHub> 
+% .
 
 %% Example Dataset
+addpath( './Codes' );
+addpath( './examples/Data' );
 % Read in an Alpha Beta titanium micrograph from Hamish Fraser at OSU.
 information = double(imread( 'LowQuality.png'));
-
+ 
 %% Encode the information
 
 % the image has been compressed and has artifacts.  black phase is alpha (0)
@@ -100,6 +124,15 @@ figure(gcf)
 xlabel( 't_x','Fontsize',16); ylabel( 't_y','Fontsize',16);
 axis equal; shading flat; hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
     'Probability(tail = beta, head = beta )','Fontsize',16);
+figure(gcf)
+
+%% Normalize
+% If normalize is turned off then f2 operates as a nice convolution
+% function
+[ T xx ] = f2( encoding.phase==1, [], 'normalize', false);
+xlabel( 't_x','Fontsize',16); ylabel( 't_y','Fontsize',16);
+axis equal; shading flat; hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
+    'Counts(tail = beta, head = beta )','Fontsize',16);
 figure(gcf)
 
 
