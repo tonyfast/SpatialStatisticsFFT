@@ -11,17 +11,37 @@ information = double(imread( 'LowQuality.png'));
 % and white phase is beta (1).  this information is segmented out in `encoding`
 
 encoding.phase = round( information ./ 255 );
-
+pcolor( encoding.phase  ); colormap gray; shading flat
+title(' white - beta-Ti  & black - alpha-Ti ', 'Fontsize', 16 )
+snapnow;
+%%
 % another segmentation could be the grain boundaries
 
 encoding.edge = edge( encoding.phase );
+colormap pink
+pcolor( 1-encoding.edge  ); shading flat
+title(' white - edge  & black - grain ', 'Fontsize', 16 )
 
 %% Compute some statistics
 %% autocorrelation of the beta phase 
 [ T xx ] = f2( encoding.phase==1, []); 
 % [ T xx ] = f2( encoding.phase, encoding.phase, 'display',false); This is
 % an autocorrelation too.
-% pcolor( fftshift(xx.values{2}), fftshift(xx.values{1}), fftshift(T) ); 
+pcolor( fftshift(xx.values{2}), fftshift(xx.values{1}), fftshift(T) ); 
+
+%%%%%%%% CHANGE COLORMAP %%%%%%%%%%%%
+% I really like to use cbrewer for different colormaps
+% http://www.mathworks.com/matlabcentral/fileexchange/34087-cbrewer-colorbrewer-schemes-for-matlab
+% Go get it or your plots are going to be gross :P
+try 
+co = cbrewer('div', 'RdYlBu', 26 ); 
+catch
+    co = jet;
+end
+colormap( co );
+
+%%%%%%%% COLORMAP %%%%%%%%%%%%
+
 xlabel( 't_x','Fontsize',16); ylabel( 't_y','Fontsize',16);
 axis equal; shading flat; hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
     'Probability(tail = beta, head = beta )','Fontsize',16);
