@@ -1,3 +1,6 @@
+%% An html view can be found at 
+% http://htmlpreview.github.io/?https://github.com/tonyfast/Spatial_Statistics/blob/master/html/example.html
+
 addpath( './Codes' );
 addpath( './examples/Data' );
 
