@@ -159,5 +159,26 @@ errorbar( 0:(numel(T)-1), T, S,'LineWidth',3,'Color','k' );
 xlim([ 0 50*sqrt(2)]);ylim([0 1])
 grid on; xlabel('|t| (pixel)','Fontsize',16); ylabel('Probability');
 
+%% Vector Outputs
+% Vector outputs have two applications.
+%%
+% # When the statistics are used as a feature vector directing the output
+% to a vector mitigates an intermediate resizing step.
+% # Sorting the strong peaks in the statistics
+%%
+[T xx] = f2( encoding.phase == 1, [], 'vector', true,'display',false );
+sortT = flipud(sortrows([T,xx],1));
+maxi = 15;
+s = sprintf('Display the %i strongest peaks and their associated vectors',maxi); disp(s);
+s = sprintf('-----------------------------'); disp(s);
+s = sprintf('Probability|t Vectors---->'); disp(s);
+disp( sortT(1:maxi,:) );
 
 %% References
+% # Niezgoda, S.R., Kanjarla, A.K., and Kalidindi, S.R., "Novel microstructure quantification framework for databasing, visualization, and analysis of microstructure data". Integrating Materials and Manufacturing Innovation, 2013. 2:3.
+% # Kalidindi, S.R., Niezgoda, S.R., and Salem, A.A., "Microstructure informatics using higher-order statistics and efficient data-mining protocols". Jom, 2011. 63(4): p. 34-41.
+% # Niezgoda, S.R., Yabansu, Y.C., and Kalidindi, S.R., "Understanding and Visualizing Microstructure and Microstructure Variance as a Stochastic Process". Acta Materialia, 2011. 59: p. 6387-6400.
+% # Fullwood, D.T., Niezgoda, S.R., Adams, B.L., and Kalidindi, S.R., "Microstructure sensitive design for performance optimization". Progress in Materials Science, 2010. 55(6): p. 477-562.
+% # Niezgoda, S.R., Fullwood, D.T., and Kalidindi, S.R., "Delineation of the space of 2-point correlations in a composite material system". Acta Materialia, 2008. 56(18): p. 5285-5292.
+% # Fullwood, D.T., Niezgoda, S.R., and Kalidindi, S.R., "Microstructure reconstructions from 2-point statistics using phase-recovery algorithms". Acta Materialia, 2008. 56(5): p. 942-948.
+% # Adams, B.L., Gao, X., and Kalidindi, S.R., "Finite approximations to the second-order properties closure in single phase polycrystals". Acta Materialia, 2005. 53(13): p. 3563-3577.

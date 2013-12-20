@@ -157,11 +157,27 @@ else
     xx.values = arrayfun( @(x)xx.values{x}(~incut{x}),1:ndims(T),'UniformOutput',false);
 end
 
+if param.vector 
+    if nargout == 2
+        switch ndims(T)
+            case 1
+                xx = xx.values{1}(:);
+            case 2
+                [X1,X2] = meshgrid( xx.values{1},xx.values{2});
+                xx = [X1(:),X2(:)];
+            case 3
+                [X1,X2,X3] = meshgrid( xx.values{1},xx.values{2},xx.values{3});
+                xx = [X1(:),X2(:),X3(:)];
+        end
+    end
+    T = T(:);
+end
 %% Display the statistics
 % The shifted image is the more canonical form to view the statistics in.
 % In fact surface is the optimum viewing tools because then you can use
 % the datatip to find probabilities for certain vectors.
 %
+
 if param.display
     % When the statistics are visualized, the outputs are
     % forced to be real, this result should be removed
@@ -198,7 +214,8 @@ param = struct('normalize',true, ...
     'periodic',false*ones(1,numel(sz)),...
     'Mask1',[],...
     'Mask2',[], ...
-    'shift', false);
+    'shift', false,...
+    'vector',false);
 
 
 fldnm = fieldnames( param );
