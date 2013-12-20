@@ -174,6 +174,51 @@ s = sprintf('-----------------------------'); disp(s);
 s = sprintf('Probability|t Vectors---->'); disp(s);
 disp( sortT(1:maxi,:) );
 
+%% Peak Finding
+%%
+% # Compute Statistics
+% # Pass statistics to Peak Finder - Peak output is a logical array of
+% where the peaks are located in the matrix.
+% # Find vectors associated with peaks.
+%
+filtersz = 5;
+[ T xx ] = f2( encoding.phase==1, []);
+
+%%% Find Peaks
+P = Peaks(T);
+[ ip jp ] = find( P );
+
+%%% Find Valleys
+P = Peaks(T,'valley', true);
+[ iv jv ] = find( P );
+
+hold on;
+h(1) = plot( xx.values{2}(jp), xx.values{1}(ip), 'ko');
+h(2) = plot( xx.values{2}(jv), xx.values{1}(iv), 'mx');
+hold off;
+colormap(1- gray);legend( h, 'Peaks','Valleys')
+title( sprintf( 'Filter Size = %i pixels with %i peaks and %i valleys', filtersz, numel(ip), numel(iv) ),'Fontsize',16);
+snapnow
+%% Changing Filter Size for Peak Finding
+% The filter size can be change to improve the granularity using the
+% parameter 'neighborhood' which reduces the number of peaks found.
+
+filtersz = 21;
+[ T xx ] = f2( encoding.phase==1, []);
+
+%%% Find Peaks
+P = Peaks(T,'neighborhood',filtersz); [ ip jp ] = find( P );
+
+%%% Find Valleys
+P = Peaks(T,'valley', true,'neighborhood',filtersz); [ iv jv ] = find( P );
+
+hold on;
+h(1) = plot( xx.values{2}(jp), xx.values{1}(ip), 'ko');
+h(2) = plot( xx.values{2}(jv), xx.values{1}(iv), 'mx');
+hold off;
+colormap(1- gray);legend( h, 'Peaks','Valleys')
+title( sprintf( 'Filter Size = %i pixels with %i peaks and %i valleys', filtersz, numel(ip), numel(iv) ),'Fontsize',16);
+
 %% References
 % # Niezgoda, S.R., Kanjarla, A.K., and Kalidindi, S.R., "Novel microstructure quantification framework for databasing, visualization, and analysis of microstructure data". Integrating Materials and Manufacturing Innovation, 2013. 2:3.
 % # Kalidindi, S.R., Niezgoda, S.R., and Salem, A.A., "Microstructure informatics using higher-order statistics and efficient data-mining protocols". Jom, 2011. 63(4): p. 34-41.

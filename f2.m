@@ -181,8 +181,7 @@ end
 if param.display
     % When the statistics are visualized, the outputs are
     % forced to be real, this result should be removed
-    switch ndims( A1 )
-        case 2
+    if ndims( A1 )== 2 & ~any( size(A1) == 1);
             if param.shift
                 pcolor(xx.values{2},xx.values{1},real(T)); 
             else
@@ -196,6 +195,16 @@ if param.display
                 str = 'Counts';
             end
             set( get( hc, 'Ylabel'), 'String', str, 'Fontsize',16,'Rotation',270,'VerticalAlignment','Bottom');
+    elseif ndims( A1 )== 2 & any( size(A1) == 1);
+            if param.shift
+                plot(xx.values{getOutput(@max,2,cellfun(@(x)numel(x),xx.values))},real(T),'Linewidth',3,'Color','k'); 
+            else
+                plot(fftshift(xx.values{getOutput(@max,2,cellfun(@(x)numel(x),xx.values))}),fftshift(real(T)),'Linewidth',3,'Color','k'); 
+            end
+            xlabel('t_x','Fontsize',16); ylabel('Probability','Fontsize',16); 
+            ylim([0 1]); xlim([0 ceil(numel(T)./2)]); grid on
+    else
+        disp('Visualization is not available for 3-D statistics yet.')
     end
 end
 
