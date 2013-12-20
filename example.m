@@ -144,5 +144,20 @@ set( gca,'Yticklabel',xx.values{1}(str2num(get( gca,'YtickLabel'))+1))
 set( gca,'Xticklabel',xx.values{2}(str2num(get( gca,'XtickLabel'))+1))
 title('Fourier Shift off')
 
+%% Pair Correlation
+% The pair correlation is the probability of finding local states h and h'
+% separated by a vector OF MAGNITUDE r.  This method computes the spatial
+% correlation function then the pair correlation function.  It provides
+% both the mean and standard deviation of the pair correlation function.
+% There is a faster way to do this using 
+% <http://www.cs.cmu.edu/~agray/nbody.html Alex Gray's>
+% techniques.
+% All the parameters are the same with PairCorrelation as f2.
+
+[T S] = PairCorrelation( encoding.phase == 1, [], 'cutoff',50 );
+errorbar( 0:(numel(T)-1), T, S,'LineWidth',3,'Color','k' );
+xlim([ 0 50*sqrt(2)]);ylim([0 1])
+grid on; xlabel('|t| (pixel)','Fontsize',16); ylabel('Probability');
+
 
 %% References
