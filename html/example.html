@@ -65,11 +65,10 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>f2 :: A function to compute spatial statistics</h1><!--introduction--><p>Spatial statistics are a statistical quantification use for materials science information.  This page explains the use cases for the function.</p><p>All of this work has been developed over the course of a decade by Surya Kalidindi's <a href="http://mined.gatech.edu">MINED research group</a>. The MINED research group is developing data driven methods to extract structure-property-processing knowledge from materials science information.</p><p><a href="http://orcid.org/0000-0001-9353-0382">Tony Fast</a> has some presentations up on <a href="www.slideshare.net/tonyfast1">SlideShare</a> presenting applications of spatial statistics.</p><p><img vspace="5" hspace="5" src="MINEDlogo.png" alt=""> </p><p>Spatial statistics provide an objective and scalable representation of materials science information that can be embedded into machine learning and regression solvers.</p><p>An HTML view of this page can be found on <a href="http://htmlpreview.github.io/?https://github.com/tonyfast/Spatial_Statistics/blob/master/html/example.html">GitHub</a> .</p><p><i>Currently, a research paper is being written to support the codes in this repository.</i></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Example Dataset</a></li><li><a href="#2">Encode the information</a></li><li><a href="#4">Compute some statistics</a></li><li><a href="#5">autocorrelation of the beta phase</a></li><li><a href="#6">crosscorrelation of the beta phase with alpha phase</a></li><li><a href="#7">crosscorrelation of the edges and alpha phase</a></li><li><a href="#8">Parameters</a></li><li><a href="#9">Turn off the visualization</a></li><li><a href="#10">Periodic boundary conditions</a></li><li><a href="#11">Partial periodic boundary conditions</a></li><li><a href="#12">Cutoff all vectors to 50</a></li><li><a href="#13">Cutoff</a></li><li><a href="#14">Normalize</a></li><li><a href="#15">Shifting - The Fourier Shift</a></li><li><a href="#16">References</a></li></ul></div><h2>Example Dataset<a name="1"></a></h2><pre class="codeinput">addpath( <span class="string">'./Codes'</span> );
+  </style></head><body><div class="content"><h1>f2 :: A function to compute spatial statistics</h1><!--introduction--><p>Spatial statistics are a statistical quantification use for materials science information.  This page explains the use cases for the function.</p><p>All of this work has been developed over the course of a decade by Surya Kalidindi's <a href="http://mined.gatech.edu">MINED research group</a>. The MINED research group is developing data driven methods to extract structure-property-processing knowledge from materials science information.</p><p><a href="http://orcid.org/0000-0001-9353-0382">Tony Fast</a> has some presentations up on <a href="www.slideshare.net/tonyfast1">SlideShare</a> presenting applications of spatial statistics.</p><p><img vspace="5" hspace="5" src="MINEDlogo.png" alt=""> </p><p>Spatial statistics provide an objective and scalable representation of materials science information that can be embedded into machine learning and regression solvers.</p><p>An HTML view of this page can be found on <a href="http://htmlpreview.github.io/?https://github.com/tonyfast/Spatial_Statistics/blob/master/html/example.html">GitHub</a> .</p><p><i>Currently, a research paper is being written to support the codes in this repository.</i></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Example Dataset</a></li><li><a href="#2">Encode the information</a></li><li><a href="#4">Compute some statistics</a></li><li><a href="#5">autocorrelation of the beta phase</a></li><li><a href="#6">crosscorrelation of the beta phase with alpha phase</a></li><li><a href="#7">crosscorrelation of the edges and alpha phase</a></li><li><a href="#8">Parameters</a></li><li><a href="#9">Turn off the visualization</a></li><li><a href="#10">Periodic boundary conditions</a></li><li><a href="#11">Partial periodic boundary conditions</a></li><li><a href="#12">Cutoff all vectors to 50</a></li><li><a href="#13">Cutoff</a></li><li><a href="#14">Normalize</a></li><li><a href="#15">Shifting - The Fourier Shift</a></li><li><a href="#16">Pair Correlation</a></li><li><a href="#17">References</a></li></ul></div><h2>Example Dataset<a name="1"></a></h2><pre class="codeinput">addpath( <span class="string">'./Codes'</span> );
 addpath( <span class="string">'./examples/Data'</span> );
 <span class="comment">% Read in an Alpha Beta titanium micrograph from Hamish Fraser at OSU.</span>
 information = double(imread( <span class="string">'LowQuality.png'</span>));
-</pre><pre class="codeoutput">Warning: Name is nonexistent or not a directory: ./Codes 
 </pre><h2>Encode the information<a name="2"></a></h2><pre class="codeinput"><span class="comment">% the image has been compressed and has artifacts.  black phase is alpha (0)</span>
 <span class="comment">% and white phase is beta (1).  this information is segmented out in `encoding`</span>
 
@@ -146,7 +145,11 @@ hc = colorbar; set( get( hc, <span class="string">'Ylabel'</span>), <span class=
 set( gca,<span class="string">'Yticklabel'</span>,xx.values{1}(str2num(get( gca,<span class="string">'YtickLabel'</span>))+1))
 set( gca,<span class="string">'Xticklabel'</span>,xx.values{2}(str2num(get( gca,<span class="string">'XtickLabel'</span>))+1))
 title(<span class="string">'Fourier Shift off'</span>)
-</pre><img vspace="5" hspace="5" src="example_11.png" alt=""> <img vspace="5" hspace="5" src="example_12.png" alt=""> <h2>References<a name="16"></a></h2><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+</pre><img vspace="5" hspace="5" src="example_11.png" alt=""> <img vspace="5" hspace="5" src="example_12.png" alt=""> <h2>Pair Correlation<a name="16"></a></h2><p>The pair correlation is the probability of finding local states h and h' separated by a vector OF MAGNITUDE r.  This method computes the spatial correlation function then the pair correlation function.  It provides both the mean and standard deviation of the pair correlation function. There is a faster way to do this using <a href="http://www.cs.cmu.edu/~agray/nbody.html">Alex Gray's</a> techniques. All the parameters are the same with PairCorrelation as f2.</p><pre class="codeinput">[T S] = PairCorrelation( encoding.phase == 1, [], <span class="string">'cutoff'</span>,50 );
+errorbar( 0:(numel(T)-1), T, S,<span class="string">'LineWidth'</span>,3,<span class="string">'Color'</span>,<span class="string">'k'</span> );
+xlim([ 0 50*sqrt(2)]);ylim([0 1])
+grid <span class="string">on</span>; xlabel(<span class="string">'|t| (pixel)'</span>,<span class="string">'Fontsize'</span>,16); ylabel(<span class="string">'Probability'</span>);
+</pre><img vspace="5" hspace="5" src="example_13.png" alt=""> <h2>References<a name="17"></a></h2><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% f2 :: A function to compute spatial statistics
 %
@@ -293,6 +296,21 @@ hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
 set( gca,'Yticklabel',xx.values{1}(str2num(get( gca,'YtickLabel'))+1))
 set( gca,'Xticklabel',xx.values{2}(str2num(get( gca,'XtickLabel'))+1))
 title('Fourier Shift off')
+
+%% Pair Correlation
+% The pair correlation is the probability of finding local states h and h'
+% separated by a vector OF MAGNITUDE r.  This method computes the spatial
+% correlation function then the pair correlation function.  It provides
+% both the mean and standard deviation of the pair correlation function.
+% There is a faster way to do this using 
+% <http://www.cs.cmu.edu/~agray/nbody.html Alex Gray's>
+% techniques.
+% All the parameters are the same with PairCorrelation as f2.
+
+[T S] = PairCorrelation( encoding.phase == 1, [], 'cutoff',50 );
+errorbar( 0:(numel(T)-1), T, S,'LineWidth',3,'Color','k' );
+xlim([ 0 50*sqrt(2)]);ylim([0 1])
+grid on; xlabel('|t| (pixel)','Fontsize',16); ylabel('Probability');
 
 
 %% References
