@@ -7,9 +7,9 @@ function [ Tpc Spc ] = PairCorrelationFFT( A1, A2, varargin );
 
 switch nargin
     case 1
-        [T,xx] = f2( A1, [],'display', false );
+        [T,xx] = SpatialStatsFFT( A1, [],'display', false );
     case 2
-        [T,xx] = f2( A1, A2,'display', false );
+        [T,xx] = SpatialStatsFFT( A1, A2,'display', false );
     otherwise
         str = '[T,xx] = SpatialStatsFFT( A1, A2, ';
         for ii = 1 : numel( varargin)
