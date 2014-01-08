@@ -152,9 +152,9 @@ title('Fourier Shift off')
 % There is a faster way to do this using 
 % <http://www.cs.cmu.edu/~agray/nbody.html Alex Gray's>
 % techniques.
-% All the parameters are the same with PairCorrelation as SpatialStatsFFT.
+% All the parameters are the same with PairCorrelationFFT as SpatialStatsFFT.
 
-[T S] = PairCorrelation( encoding.phase == 1, [], 'cutoff',50 );
+[T S] = PairCorrelationFFT( encoding.phase == 1, [], 'cutoff',50 );
 errorbar( 0:(numel(T)-1), T, S,'LineWidth',3,'Color','k' );
 xlim([ 0 50*sqrt(2)]);ylim([0 1])
 grid on; xlabel('|t| (pixel)','Fontsize',16); ylabel('Probability');
