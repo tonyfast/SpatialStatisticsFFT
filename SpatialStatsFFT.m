@@ -1,4 +1,4 @@
-function [T xx] = f2( A1,A2, varargin)
+function [T xx] = SpatialStatsFFT( A1,A2, varargin)
 % Computes that spatial statistics of input signals A1 and A2.  The
 % functions appropriately normalizes the statistics.  This function is
 % optimized using fast Fourier transforms to expedite the computation of
