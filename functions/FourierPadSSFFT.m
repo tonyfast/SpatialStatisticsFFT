@@ -1,4 +1,4 @@
-function fA = FourierPad( A, osz, nsz );
+function fA = FourierPadSSFFT( A, osz, nsz );
 
 if all( osz == nsz )
     fA = double(A);

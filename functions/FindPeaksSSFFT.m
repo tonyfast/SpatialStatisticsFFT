@@ -1,4 +1,4 @@
-function P = Peaks( T, varargin )
+function P = FindPeaksSSFFT( T, varargin )
 % Finds the peaks or valleys in the spatial correlation functions.
 param = setparam( varargin, numel(T),size(T) );
 % Design the filter
