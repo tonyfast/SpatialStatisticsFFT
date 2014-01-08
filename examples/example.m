@@ -32,6 +32,7 @@
 %% Example Dataset
 addpath( '../functions' );
 addpath( '../examples/Data' );
+addpath( '..')
 % Read in an Alpha Beta titanium micrograph from Hamish Fraser at OSU.
 information = double(imread( 'LowQuality.png')); information = information(:,:,1);
 
