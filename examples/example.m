@@ -1,4 +1,4 @@
-%% f2 :: A function to compute spatial statistics
+%% SpatialStatsFFT :: A function to compute spatial statistics
 %
 % Spatial statistics are a statistical quantification use for materials
 % science information.  This page explains the use cases for the function.
@@ -54,8 +54,8 @@ title(' white - edge  & black - grain ', 'Fontsize', 16 )
 
 %% Compute some statistics
 %% autocorrelation of the beta phase
-[ T xx ] = f2( encoding.phase==1, []);
-% [ T xx ] = f2( encoding.phase, encoding.phase, 'display',false); This is
+[ T xx ] = SpatialStatsFFT( encoding.phase==1, []);
+% [ T xx ] = SpatialStatsFFT( encoding.phase, encoding.phase, 'display',false); This is
 % an autocorrelation too.
 
 %%%%%%%% CHANGE COLORMAP %%%%%%%%%%%%
@@ -74,12 +74,12 @@ hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
     'Probability(tail = beta, head = beta )','Fontsize',16);
 
 %% crosscorrelation of the beta phase with alpha phase
-[ T xx ] = f2( encoding.phase==1, encoding.phase==0);
+[ T xx ] = SpatialStatsFFT( encoding.phase==1, encoding.phase==0);
 hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
     'Probability(tail = beta, head = alpha )','Fontsize',16);
 
 %%  crosscorrelation of the edges and alpha phase
-[ T xx ] = f2( encoding.edge , encoding.phase==0);
+[ T xx ] = SpatialStatsFFT( encoding.edge , encoding.phase==0);
 hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
     'Probability(tail = edge, head = alpha )','Fontsize',16);
 
@@ -87,37 +87,37 @@ hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
 % The following parameters work for any correlation, but the examples are show on an autcorrelation
 
 %% Turn off the visualization
-[ T xx ] = f2( encoding.phase==1, [], 'display', false);
+[ T xx ] = SpatialStatsFFT( encoding.phase==1, [], 'display', false);
 
 %% Periodic boundary conditions
-[ T xx ] = f2( encoding.phase==1, [], 'periodic', true);
+[ T xx ] = SpatialStatsFFT( encoding.phase==1, [], 'periodic', true);
 hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
     'Probability(tail = beta, head = beta )','Fontsize',16);
 figure(gcf)
 
 %% Partial periodic boundary conditions
 % nonperiodic in the first dim and the periodic in the second
-[ T xx ] = f2( encoding.phase==1, [], 'periodic', [ false true]);
+[ T xx ] = SpatialStatsFFT( encoding.phase==1, [], 'periodic', [ false true]);
 hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
     'Probability(tail = beta, head = beta )','Fontsize',16);
 
 %% Cutoff all vectors to 50
 % BAM! Zoom in on it!
-[ T xx ] = f2( encoding.phase==1, [], 'cutoff', 50);
+[ T xx ] = SpatialStatsFFT( encoding.phase==1, [], 'cutoff', 50);
 hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
     'Probability(tail = beta, head = beta )','Fontsize',16);
 
 %% Cutoff
 % Cutoff of the second dimension to 50 and return all of the rest of the
 % stats
-[ T xx ] = f2( encoding.phase==1, [], 'cutoff', [Inf 50 ]);
+[ T xx ] = SpatialStatsFFT( encoding.phase==1, [], 'cutoff', [Inf 50 ]);
 hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
     'Probability(tail = beta, head = beta )','Fontsize',16);
 
 %% Normalize
-% If normalize is turned off then f2 operates as a nice convolution
+% If normalize is turned off then SpatialStatsFFT operates as a nice convolution
 % function
-[ T xx ] = f2( encoding.phase==1, [], 'normalize', false);
+[ T xx ] = SpatialStatsFFT( encoding.phase==1, [], 'normalize', false);
 hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
     'Counts(tail = beta, head = beta )','Fontsize',16);
 
@@ -125,7 +125,7 @@ hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
 % The display is suppressed for the sake of argument.  It is easy to
 % combine parameters.
 
-[T xx] = f2( encoding.phase==1, [], 'shift', true, 'display',false);
+[T xx] = SpatialStatsFFT( encoding.phase==1, [], 'shift', true, 'display',false);
 pcolor(xx.values{2},xx.values{1},real(T));
 shading flat; axis equal;
 xlabel('t_x','Fontsize',16); ylabel('t_y','Fontsize',16, 'Rotation',0);
@@ -134,7 +134,7 @@ hc = colorbar; set( get( hc, 'Ylabel'), 'String',...
 title('Fourier Shift on')
 snapnow
 
-[T xx] = f2( encoding.phase==1, [], 'shift', false, 'display',false);
+[T xx] = SpatialStatsFFT( encoding.phase==1, [], 'shift', false, 'display',false);
 pcolor(real(T));
 shading flat; axis equal;
 xlabel('t_x','Fontsize',16); ylabel('t_y','Fontsize',16, 'Rotation',0);
@@ -152,7 +152,7 @@ title('Fourier Shift off')
 % There is a faster way to do this using 
 % <http://www.cs.cmu.edu/~agray/nbody.html Alex Gray's>
 % techniques.
-% All the parameters are the same with PairCorrelation as f2.
+% All the parameters are the same with PairCorrelation as SpatialStatsFFT.
 
 [T S] = PairCorrelation( encoding.phase == 1, [], 'cutoff',50 );
 errorbar( 0:(numel(T)-1), T, S,'LineWidth',3,'Color','k' );
@@ -166,7 +166,7 @@ grid on; xlabel('|t| (pixel)','Fontsize',16); ylabel('Probability');
 % to a vector mitigates an intermediate resizing step.
 % # Sorting the strong peaks in the statistics
 %%
-[T xx] = f2( encoding.phase == 1, [], 'vector', true,'display',false );
+[T xx] = SpatialStatsFFT( encoding.phase == 1, [], 'vector', true,'display',false );
 sortT = flipud(sortrows([T,xx],1));
 maxi = 15;
 s = sprintf('Display the %i strongest peaks and their associated vectors',maxi); disp(s);
@@ -182,7 +182,7 @@ disp( sortT(1:maxi,:) );
 % # Find vectors associated with peaks.
 %
 filtersz = 5;
-[ T xx ] = f2( encoding.phase==1, []);
+[ T xx ] = SpatialStatsFFT( encoding.phase==1, []);
 
 %%% Find Peaks
 P = Peaks(T);
@@ -204,7 +204,7 @@ snapnow
 % parameter 'neighborhood' which reduces the number of peaks found.
 
 filtersz = 21;
-[ T xx ] = f2( encoding.phase==1, []);
+[ T xx ] = SpatialStatsFFT( encoding.phase==1, []);
 
 %%% Find Peaks
 P = Peaks(T,'neighborhood',filtersz); [ ip jp ] = find( P );
