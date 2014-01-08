@@ -11,7 +11,7 @@ switch nargin
     case 2
         [T,xx] = f2( A1, A2,'display', false );
     otherwise
-        str = '[T,xx] = f2( A1, A2, ';
+        str = '[T,xx] = SpatialStatsFFT( A1, A2, ';
         for ii = 1 : numel( varargin)
             str = horzcat( str, sprintf('varargin{%i},',ii));
         end

@@ -30,8 +30,8 @@
 % this repository._
 
 %% Example Dataset
-addpath( './Codes' );
-addpath( './examples/Data' );
+addpath( '../functions' );
+addpath( '../examples/Data' );
 % Read in an Alpha Beta titanium micrograph from Hamish Fraser at OSU.
 information = double(imread( 'LowQuality.png')); information = information(:,:,1);
 
