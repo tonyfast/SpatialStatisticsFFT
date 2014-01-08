@@ -22,8 +22,8 @@ Installation
 + Download the repository from https://github.com/tonyfast/Spatial_Statistics/archive/master.zip
 + Unzip the package to a directory where Spatial_Statistics will rest in
 
-2. Add Spatial_Statistics as a path in the matlab working directory
-addpath( genpath( <Spatial_Statistics directory path> ) )
+2. Add SpatialStatisticsFFT and SpatialStatisticsFFT/fuctions to the Matlab path
+
 
 Once the file is added a subdirectory then the coding suite can be used.
 
