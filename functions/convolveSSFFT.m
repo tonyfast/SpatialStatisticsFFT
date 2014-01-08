@@ -1,4 +1,4 @@
-function fA = convolve(period,A1,A2)
+function fA = convolveSSFFT(period,A1,A2)
 % convolve pads the data signals then performs the convolution of signals
 % A1 and A2 using fast fourier transform algorithms.
 period_mult= .6; %describe this value

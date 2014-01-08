@@ -185,11 +185,11 @@ filtersz = 5;
 [ T xx ] = SpatialStatsFFT( encoding.phase==1, []);
 
 %%% Find Peaks
-P = Peaks(T);
+P = FindPeaksSSFFT(T);
 [ ip jp ] = find( P );
 
 %%% Find Valleys
-P = Peaks(T,'valley', true);
+P = FindPeaksSSFFT(T,'valley', true);
 [ iv jv ] = find( P );
 
 hold on;
@@ -207,10 +207,10 @@ filtersz = 21;
 [ T xx ] = SpatialStatsFFT( encoding.phase==1, []);
 
 %%% Find Peaks
-P = Peaks(T,'neighborhood',filtersz); [ ip jp ] = find( P );
+P = FindPeaksSSFFT(T,'neighborhood',filtersz); [ ip jp ] = find( P );
 
 %%% Find Valleys
-P = Peaks(T,'valley', true,'neighborhood',filtersz); [ iv jv ] = find( P );
+P = FindPeaksSSFFT(T,'valley', true,'neighborhood',filtersz); [ iv jv ] = find( P );
 
 hold on;
 h(1) = plot( xx.values{2}(jp), xx.values{1}(ip), 'ko');
