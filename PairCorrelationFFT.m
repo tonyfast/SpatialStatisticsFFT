@@ -1,6 +1,6 @@
-function [ Tpc Spc ] = PairCorrelation( A1, A2, varargin );
-% Pair correlation function after computing the spatial statistics.  There
-% is a faster way to do this using Alex Gray's methods.
+function [ Tpc Spc ] = PairCorrelationFFT( A1, A2, varargin );
+% This function uses the SpatialStatsFFT to compute the pair correlation function by integrating over the angles in the vector resolved statistics space.
+% There is a faster way to do this using Alex Gray's methods.
 % 
 % Tpc - Is the average probability for the pair correlation
 % Spc - Is the standard deviation of the probability for the pair correlation
