@@ -1,7 +1,12 @@
-Spatial_Statistics
-==================
+SpatialStatisticsFFT
+====================
 
 The spatial statistics repository is a suite of codes to compute pair correlation functions and spatial correlation functions (ie. pair correlation functions for specific vector distances).  The code base is written in MATLAB for both Windows 7 Ultimate and Snow Leopard.  This repository contains a set of utilities to compute advanced statistics using both naive and optimized algorithms to compute spatial correlation functions.
+
+Temporary Documentation
+=======================
+
+http://htmlpreview.github.io/?https://github.com/tonyfast/Spatial_Statistics/blob/master/examples/html/example.html 
 
 Installation
 ============
