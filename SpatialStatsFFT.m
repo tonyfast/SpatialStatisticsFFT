@@ -97,15 +97,15 @@ end
 
 if param.auto  % Autocorrelation
     if numel( param.Mask1 ) == 0
-        T = convolve( param.periodic, A1 );
+        T = convolveSSFFT( param.periodic, A1 );
     else   % Partial
-        T = convolve( param.periodic, param.Mask1.*A1 );
+        T = convolveSSFFT( param.periodic, param.Mask1.*A1 );
     end
 else   % Crosscorrelation
     if numel( param.Mask1 ) == 0
-        T = convolve( param.periodic, A1, A2 );
+        T = convolveSSFFT( param.periodic, A1, A2 );
     else  % Partial
-        T = convolve( param.periodic, param.Mask1.*A1, param.Mask2.*A2 );
+        T = convolveSSFFT( param.periodic, param.Mask1.*A1, param.Mask2.*A2 );
     end
 end
 
@@ -117,13 +117,13 @@ if param.normalize
             T = T./ numel( A1 );
         else  % Partial and Nonperiodic
             % compute it directly, for the meantime use the convolution
-            T(:) = T./ convolve( param.periodic, ones(size(A1)));
+            T(:) = T./ convolveSSFFT( param.periodic, ones(size(A1)));
         end
     else  % Partial
         if param.auto  % Auto
-            T(:) = T./ convolve( param.periodic, param.Mask1 );
+            T(:) = T./ convolveSSFFT( param.periodic, param.Mask1 );
         else   % Cross
-            T(:) = T./ convolve( param.periodic, param.Mask1, param.Mask2 );
+            T(:) = T./ convolveSSFFT( param.periodic, param.Mask1, param.Mask2 );
         end
     end
 end
