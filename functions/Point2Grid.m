@@ -1,4 +1,4 @@
-function V = Point2Grid( Data, Lims, Out_SZ );
+function [ V xx ] = Point2Grid( Data, Lims, Out_SZ );
 
 if ~exist( 'Lims', 'var' ) || numel( Lims ) == 0 
     Lims = [min(Data)',max(Data)'];
@@ -30,4 +30,11 @@ switch numel(Out_SZ)
         V(:) = accumarray( sub2ind( Out_SZ, SUBS(:,1), SUBS(:,2), SUBS(:,3)), ...
             ones(size(SUBS(:,1))), ...
             [ prod(Out_SZ),1], @sum);
+end
+
+if nargout == 2
+    for ii = 1 : numel( Out_SZ );
+        dx = diff(Lims(ii,:))./(Out_SZ);
+        xx.values{ii} = (Lims(ii,1) + dx/2):dx:(Lims(ii,2));
+    end
 end
