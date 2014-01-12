@@ -27,5 +27,9 @@ Installation
 
 Once the file is added a subdirectory then the coding suite can be used.
 
+Principal Analysis Matlab Code
+==============================
+I suggest using Mark Tygert's randomized Principal Component Analysis function that can be downloaded from http://cims.nyu.edu/~tygert/pca.m . 
+
 
 
