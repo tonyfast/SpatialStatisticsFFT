@@ -1,6 +1,8 @@
 function fA = convolveSSFFT(period,A1,A2)
 % convolve pads the data signals then performs the convolution of signals
 % A1 and A2 using fast fourier transform algorithms.
+% This is the degree to which the image is padded because we are only
+% extracting half of the vector
 period_mult= .6; %describe this value
 
 % in reality you only need to pad to rmax
