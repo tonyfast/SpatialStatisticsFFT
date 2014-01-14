@@ -33,7 +33,7 @@
 addpath( '../functions' );
 addpath( '../examples/Data' );
 % Read in an Alpha Beta titanium micrograph from Hamish Fraser at OSU.
-information = double(imread( 'LowQuality.png')); information = information(:,:,1);
+information = double(imread( 'Example.png')); information = information(:,:,1);
 
 %% Encode the information
 
