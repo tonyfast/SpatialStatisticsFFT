@@ -262,3 +262,134 @@ param.Mask2 = cast( param.Mask2, 'double' );
 if numel( param.cutoff ) == 1 param.cutoff = param.cutoff * ones(1, numel( sz )); end
 id = find(isinf(param.cutoff)); if numel(id) > 0 param.cutoff(id) = sz(id)./2; end
 end
+
+
+%%
+
+function P = FindPeaksSSFFT( T, varargin )
+% Finds the peaks or valleys in the spatial correlation functions.
+param = setparam( varargin, numel(T),size(T) );
+% Design the filter
+F = ones( param.neighborhood);
+F( ceil(numel(F)./2) ) = 0;
+if ~param.valley
+    P = T > imdilate( T, F );
+else
+    P = T < imerode( T, F );
+end
+
+end
+
+function param = setparam( varargin, N, sz )
+    if sz(2) == 1 & N == sz(1)
+        r = 1;
+    else
+        r = numel( sz );
+    end
+        
+    param = struct( 'neighborhood', 5*ones(1,r),...
+        'valley', false);
+    if numel( varargin ) > 0
+        for ii = 1 : 2 :numel( varargin )
+            param = setfield( param, varargin{ii}, varargin{ii+1});
+        end
+    end
+end
+
+%%
+
+function fA = FourierPadSSFFT( A, osz, nsz );
+
+if all( osz == nsz )
+    fA = double(A);
+else
+    switch numel(nsz)
+        case 1
+        case 2
+            
+            fA = [ A, zeros([osz(1),nsz(2)-osz(2)]); zeros( nsz(1)-osz(1),nsz(2))];
+        case 3
+            fA = cat( 3, [A, zeros( [osz(1) nsz(2)-osz(2) osz(3)]); zeros( [nsz(1)-osz(1) osz(2) osz(3)]), zeros( [nsz(1)-osz(1) nsz(2)-osz(2), osz(3)])],...  
+                zeros( [ nsz(1) nsz(2), nsz(3) - osz(3)]));
+    end
+end
+
+for ii = 1 :  numel(nsz)
+    fA(:) = fft( fA, [], ii);
+end
+
+%%
+
+function [ V xx ] = Point2Grid( Data, Lims, Out_SZ );
+
+if ~exist( 'Lims', 'var' ) || numel( Lims ) == 0 
+    Lims = [min(Data)',max(Data)'];
+end
+
+SUBS = bsxfun( @minus, Data, Lims(:,1)');
+SUBS(:) = bsxfun( @rdivide, SUBS, diff(Lims,[],2)');
+SUBS(:) = bsxfun( @plus, SUBS, 1./Out_SZ(:)'./2 );
+SUBS(:) = round(bsxfun( @times, SUBS, Out_SZ(:)'));
+
+%%
+if numel( Out_SZ) == 1
+    V = zeros(  [Out_SZ 1]);
+else
+    V = zeros(  Out_SZ );
+end
+
+switch numel(Out_SZ)
+    case 1
+        V(:) = accumarray( SUBS(:,1), ...
+            ones( size(SUBS(:,1))), ...
+            [ prod(Out_SZ),1], @sum);
+    case 2
+        V(:) = accumarray( sub2ind( Out_SZ, SUBS(:,1), SUBS(:,2)), ...
+            ones( size(SUBS(:,1))), ...
+            [ prod(Out_SZ),1], @sum);
+    case 3
+        
+        V(:) = accumarray( sub2ind( Out_SZ, SUBS(:,1), SUBS(:,2), SUBS(:,3)), ...
+            ones(size(SUBS(:,1))), ...
+            [ prod(Out_SZ),1], @sum);
+end
+
+if nargout == 2
+    for ii = 1 : numel( Out_SZ );
+        dx = diff(Lims(ii,:))./(Out_SZ);
+        xx.values{ii} = (Lims(ii,1) + dx/2):dx:(Lims(ii,2));
+    end
+end
+
+%%
+
+function fA = convolveSSFFT(period,A1,A2)
+% convolve pads the data signals then performs the convolution of signals
+% A1 and A2 using fast fourier transform algorithms.
+% This is the degree to which the image is padded because we are only
+% extracting half of the vector
+period_mult= .6; %describe this value
+
+% in reality you only need to pad to rmax
+realvals = isreal(A1)*ones(1,2);  % supresses imaginary parts if the values in the statistics
+nsz = ceil([ones(size(period)) + (1-period)*period_mult].*size( A1));
+
+
+fA = FourierPadSSFFT( A1, size( A1 ), nsz );
+
+if exist('A2','var') && numel( A2 ) > 0
+    if all( nsz == ceil([ones(size(period)) + (1-period)*period_mult].*size( A2)) );    % THIS CONDITION HERE IS PROBLABLY A PROBLEM
+        realvals(2) = isreal(A2);
+        fA(:) = fA .* conj( FourierPadSSFFT( A2, size(A1), nsz ));
+    else
+        error('The sizes are incaptable.')
+    end
+else % Weiner-Kinchin Method to Autocorrelations
+    fA(:) = abs( fA ).^2;
+end
+
+fA(:) = ifftn( fA );
+
+if all(realvals) fA(:) = real(fA); end;
+
+end
