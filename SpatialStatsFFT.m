@@ -278,25 +278,25 @@ else
     P = T < imerode( T, F );
 end
 
-end
 
-function param = setparam( varargin, N, sz )
-    if sz(2) == 1 & N == sz(1)
-        r = 1;
-    else
-        r = numel( sz );
-    end
-        
-    param = struct( 'neighborhood', 5*ones(1,r),...
-        'valley', false);
-    if numel( varargin ) > 0
-        for ii = 1 : 2 :numel( varargin )
-            param = setfield( param, varargin{ii}, varargin{ii+1});
+
+    function param = setparam( varargin, N, sz )
+        if sz(2) == 1 & N == sz(1)
+            r = 1;
+        else
+            r = numel( sz );
+        end
+
+        param = struct( 'neighborhood', 5*ones(1,r),...
+            'valley', false);
+        if numel( varargin ) > 0
+            for ii = 1 : 2 :numel( varargin )
+                param = setfield( param, varargin{ii}, varargin{ii+1});
+            end
         end
     end
-end
-
-%%
+end   
+%% Padding procedure for nonperiodic structures
 
 function fA = FourierPadSSFFT( A, osz, nsz );
 
@@ -317,8 +317,10 @@ end
 for ii = 1 :  numel(nsz)
     fA(:) = fft( fA, [], ii);
 end
+end
 
-%%
+
+%%  Grid Point Cloud Data
 
 function [ V xx ] = Point2Grid( Data, Lims, Out_SZ );
 
@@ -359,6 +361,8 @@ if nargout == 2
         dx = diff(Lims(ii,:))./(Out_SZ);
         xx.values{ii} = (Lims(ii,1) + dx/2):dx:(Lims(ii,2));
     end
+end
+
 end
 
 %%
