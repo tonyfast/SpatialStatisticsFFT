@@ -30,10 +30,8 @@
 % this repository._
 
 %% Example Dataset
-addpath( '../functions' );
-addpath( '../examples/Data' );
 % Read in an Alpha Beta titanium micrograph from Hamish Fraser at OSU.
-information = double(imread( 'Example.png')); information = information(:,:,1);
+information = double(imread( './examples/Data/Example.png')); information = information(:,:,1);
 
 %% Encode the information
 
