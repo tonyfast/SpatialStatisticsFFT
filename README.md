@@ -5,6 +5,20 @@ In practice, materials science information must be evaluated and compared in a s
 
 Spatial statistics provide a powerful objective statistical quantifier for materials science information.  Spatial statistics have effective statistical measures embedded in them such as [volume fraction]() and [specific surface area]().  
 
+Getting Started
+===============
+
+[Quick Start](http://tonyfast.com/SpatialStatisticsFFT/2014/05/14/QuickStart---Get-started-in-Matlab.html) documentation in Matlab.
+
+###  Steps 
+
+1. Fork/Clone/Download the Repository
+2. Add the top-level directory to the Matlab path.
+3. Execute ``QuickStart.m`` 
+
+Applications
+============
+
 Spatial statistics have shown diverse applications in
 
 * [Metallic feature identification](http://www.sciencedirect.com/science/article/pii/S1359645411004654)
