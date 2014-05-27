@@ -24,6 +24,10 @@ Main Functions
 * ``FindPeaksSSFFT`` - Find the peaks (or valleys) in the vector-resolved Spatial Statistics
 * ``PlotSlice`` - A requested visualization tool to plot individual slices in volumetric spatial statistics.
 
+### Usage 
+
+Automated code documentation can be found [here](http://tonyfast.com/SpatialStatisticsFFT/2014/05/16/Spatial-Statistics-documentation.html).
+
 Applications
 ============
 
