@@ -7,9 +7,9 @@ Spatial statistics provide a powerful objective statistical quantifier for mater
 
 Spatial statistics have shown diverse applications in
 
-* Metallic feature identification 
-* Homogenization relations in fuel cells
-* Electronic potential identification in Molecular Dynamics
+* [Metallic feature identification](http://www.sciencedirect.com/science/article/pii/S1359645411004654)
+* [Homogenization relations in fuel cells](http://scholar.google.com/citations?view_op=view_citation&hl=en&user=OWGKu6wAAAAJ&citation_for_view=OWGKu6wAAAAJ:zYLM7Y9cAGgC)
+* [Electronic potential identification in Molecular Dynamics](http://tonyfast.com/Atomic-Positions/2014/05/15/Feature-Identifaction-in-Molecular-Dynamics-Potential-Comparisons.html)
 
 
 Principal Analysis Matlab Code
