@@ -16,6 +16,14 @@ Getting Started
 2. Add the top-level directory to the Matlab path.
 3. Execute ``QuickStart.m`` 
 
+Main Functions
+==============
+
+* ``SpatialStatsFFT`` - Compute the Spatial Statistics using Fast Fourier Transform algorithms for speak.
+* ``PairCorrelationFFT`` - Compute the Pair Correlation by computing the vector-resolved Spatial Statistics and integrating over angle.
+* ``FindPeaksSSFFT`` - Find the peaks (or valleys) in the vector-resolved Spatial Statistics
+* ``PlotSlice`` - A requested visualization tool to plot individual slices in volumetric spatial statistics.
+
 Applications
 ============
 
