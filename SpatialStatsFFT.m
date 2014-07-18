@@ -89,7 +89,7 @@ end
 
 if exist('A2','var') && numel(A2) > 0
     if all(size(A1) == size(A2))
-        if any(A1(:)~=A2(:)) param.auto = false; end
+        param.auto = false; 
     else error('The size of the input signals are not the same.'); end
 end
 
