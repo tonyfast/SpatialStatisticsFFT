@@ -1,6 +1,0 @@
-[submodule "peakfind_gist"]
-	path = peakfind_gist
-	url = https://gist.github.com/57d5a012866842240145.git
-[submodule "partion_gist"]
-	path = partion_gist
-	url = https://gist.github.com/ec4e0dc3cf39869f430d.git
