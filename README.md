@@ -10,7 +10,7 @@ Getting Started
 
 * Clone this Repository
 * __Compute Spatial Statistics from a URL__ - ``F = SpatialStatsFFT('https://farm3.staticflickr.com/2397/12972389405_223298503d_z.jpg');``
-* 
+
 Other Images
 ============
 
