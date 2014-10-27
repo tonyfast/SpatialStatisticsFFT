@@ -8,13 +8,13 @@ Spatial statistics provide a powerful objective statistical quantifier for mater
 Getting Started
 ===============
 
-[Quick Start](http://tonyfast.com/SpatialStatisticsFFT/2014/05/14/QuickStart---Get-started-in-Matlab.html) documentation in Matlab.
+* Clone this Repository
+* __Compute Spatial Statistics from a URL__ - ``F = SpatialStatsFFT('https://farm3.staticflickr.com/2397/12972389405_223298503d_z.jpg');``
+* 
+Other Images
+============
 
-###  Steps 
-
-1. Fork/Clone/Download the Repository
-2. Add the top-level directory to the Matlab path.
-3. Execute ``QuickStart.m`` 
+* https://farm3.staticflickr.com/2689/12972815434_734b24ef1d_z.jpg
 
 Main Functions
 ==============
