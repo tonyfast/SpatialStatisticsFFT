@@ -1,31 +1,42 @@
 SpatialStatisticsFFT
 ====================
 
-The spatial statistics repository is a suite of codes to compute pair correlation functions and spatial correlation functions (ie. pair correlation functions for specific vector distances).  The code base is written in MATLAB for both Windows 7 Ultimate and Snow Leopard.  This repository contains a set of utilities to compute advanced statistics using both naive and optimized algorithms to compute spatial correlation functions.
+In practice, materials science information must be evaluated and compared in a statistical manner.  Traditional materials science practice involves pre-processing steps that identify material features; from there statistics of the features are extracted.  Examples of feature statistics are orientition distribution functions, volume fraction, variance; the statistics are feature identifiers in materials science. 
 
-Temporary Documentation
-=======================
+Spatial statistics provide a powerful objective statistical quantifier for materials science information.  Spatial statistics have effective statistical measures embedded in them such as [volume fraction](http://www.sciencedirect.com/science/article/pii/S1359645407007458) and [specific surface area](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.49.1716).  
 
-http://htmlpreview.github.io/?https://github.com/tonyfast/Spatial_Statistics/blob/master/examples/html/example.html 
+Getting Started
+===============
 
-Installation
+[Quick Start](http://tonyfast.com/SpatialStatisticsFFT/2014/05/14/QuickStart---Get-started-in-Matlab.html) documentation in Matlab.
+
+###  Steps 
+
+1. Fork/Clone/Download the Repository
+2. Add the top-level directory to the Matlab path.
+3. Execute ``QuickStart.m`` 
+
+Main Functions
+==============
+
+* ``SpatialStatsFFT`` - Compute the Spatial Statistics using Fast Fourier Transform algorithms for speak.
+* ``PairCorrelationFFT`` - Compute the Pair Correlation by computing the vector-resolved Spatial Statistics and integrating over angle.
+* ``FindPeaksSSFFT`` - Find the peaks (or valleys) in the vector-resolved Spatial Statistics
+* ``PlotSlice`` - A requested visualization tool to plot individual slices in volumetric spatial statistics.
+
+### Usage 
+
+Automated code documentation can be found [here](http://tonyfast.com/SpatialStatisticsFFT/2014/05/16/Spatial-Statistics-documentation.html).
+
+Applications
 ============
 
+Spatial statistics have shown diverse applications in
 
-1a. Pull from GitHub in Matlab
-+ Open a Matlab Instantiation
-+ cd to the directory you want to place Spatial_Statistics
-+ In the Matlab command line execute
-  !git clone https://github.com/tonyfast/Spatial_Statistics.git
-  
-1b. Download frim GitHub
-+ Download the repository from https://github.com/tonyfast/Spatial_Statistics/archive/master.zip
-+ Unzip the package to a directory where Spatial_Statistics will rest in
+* [Metallic feature identification](http://www.sciencedirect.com/science/article/pii/S1359645411004654)
+* [Homogenization relations in fuel cells](http://scholar.google.com/citations?view_op=view_citation&hl=en&user=OWGKu6wAAAAJ&citation_for_view=OWGKu6wAAAAJ:zYLM7Y9cAGgC)
+* [Electronic potential identification in Molecular Dynamics](http://tonyfast.com/Atomic-Positions/2014/05/15/Feature-Identifaction-in-Molecular-Dynamics-Potential-Comparisons.html)
 
-2. Add SpatialStatisticsFFT and SpatialStatisticsFFT/fuctions to the Matlab path
-
-
-Once the file is added a subdirectory then the coding suite can be used.
 
 Principal Analysis Matlab Code
 ==============================
