@@ -77,6 +77,36 @@ function [T xx] = SpatialStatsFFT( A1,A2, varargin)
 % parameters are automatically defined and not decided.  This is useful in
 % repetative applications.
 
+%% Quickstart :: Spatial Statistics from web url
+% * Download an image from the web
+% * Extract States from the Image
+% * Store the image as a workspace variable
+% * Compute Spatial Statistics on the data.
+
+
+if ischar( A1 );
+    % Find potential variable names
+    varnm = evalin('base', 'genvarname(''SpatialStatsVar'',who);');
+    
+    % Create a structure in the path that has the image data and the url
+    assignin( 'base', varnm, struct( 'data', cast(  ...
+                                                imread( A1 ), ... Image from the web
+                                                'double' ), ...
+                                      'url', A1 ) );
+    
+    % Save a local variable for the spatial statistics
+    A1 = round( evalin( 'base', sprintf( '%s.data',varnm) )./255 );
+    
+    % Alert user of the new workspace variable
+    disp( ...
+        sprintf( 'The image data has been saved to your workspace as ``%s``.', varnm ) ...
+        );
+    
+    % Save the variable in the workspace
+    param.auto = true; 
+end
+
+
 %% Initialize Critical Data Elements
 if numel(varargin) == 1 && isstruct( varargin )
     param = varargin;
@@ -84,12 +114,14 @@ else
     param = setparam(varargin, size(A1));
 end
 
+
 %%
 % Decide whether the correlation is an auto or cross correlation
 
 if exist('A2','var') && numel(A2) > 0
     if all(size(A1) == size(A2))
         if any(A1(:)~=A2(:)) param.auto = false; end
+        
     else error('The size of the input signals are not the same.'); end
 end
 
@@ -133,12 +165,12 @@ for ii = 1 : ndims(T)
     uu = 1 : floor(size(T,ii)./2);
     
     if mod( size(T,ii), 2) == 0
-        xx.values{ii} = [uu-1,fliplr(uu)*-1];
+        xx{ii} = [uu-1,fliplr(uu)*-1];
     else
-        xx.values{ii} = [ 0 , uu, fliplr( uu ) * -1 ];
+        xx{ii} = [ 0 , uu, fliplr( uu ) * -1 ];
     end
     
-    incut{ii} = abs(xx.values{ii}) > param.cutoff(ii);
+    incut{ii} = abs(xx{ii}) > param.cutoff(ii);
 end
 
 %% Truncate Statistics
@@ -151,22 +183,22 @@ if ndims(T) >= 3
 end
 
 if param.shift
-    xx.values = arrayfun( @(x)fftshift(xx.values{x}(~incut{x})),1:ndims(T),'UniformOutput',false);
+    xx = arrayfun( @(x)fftshift(xx{x}(~incut{x})),1:ndims(T),'UniformOutput',false);
     T(:) = fftshift(T);
 else
-    xx.values = arrayfun( @(x)xx.values{x}(~incut{x}),1:ndims(T),'UniformOutput',false);
+    xx = arrayfun( @(x)xx{x}(~incut{x}),1:ndims(T),'UniformOutput',false);
 end
 
 if param.vector 
     if nargout == 2
         switch ndims(T)
             case 1
-                xx = xx.values{1}(:);
+                xx = xx{1}(:);
             case 2
-                [X1,X2] = meshgrid( xx.values{1},xx.values{2});
+                [X1,X2] = meshgrid( xx{1},xx{2});
                 xx = [X1(:),X2(:)];
             case 3
-                [X1,X2,X3] = meshgrid( xx.values{1},xx.values{2},xx.values{3});
+                [X1,X2,X3] = meshgrid( xx{1},xx{2},xx{3});
                 xx = [X1(:),X2(:),X3(:)];
         end
     end
@@ -183,9 +215,9 @@ if param.display
     % forced to be real, this result should be removed
     if ndims( A1 )== 2 & ~any( size(A1) == 1);
             if param.shift
-                pcolor(xx.values{2},xx.values{1},real(T)); 
+                pcolor(xx{2},xx{1},real(T)); 
             else
-                pcolor(fftshift(xx.values{2}),fftshift(xx.values{1}),fftshift(real(T))); 
+                pcolor(fftshift(xx{2}),fftshift(xx{1}),fftshift(real(T))); 
             end
             xlabel('t_x','Fontsize',16); ylabel('t_y','Fontsize',16, 'Rotation',0); 
             hc = colorbar; shading flat; axis equal
@@ -197,9 +229,9 @@ if param.display
             set( get( hc, 'Ylabel'), 'String', str, 'Fontsize',16,'Rotation',270,'VerticalAlignment','Bottom');
     elseif ndims( A1 )== 2 & any( size(A1) == 1);
             if param.shift
-                plot(xx.values{getOutput(@max,2,cellfun(@(x)numel(x),xx.values))},real(T),'Linewidth',3,'Color','k'); 
+                plot(xx{getOutput(@max,2,cellfun(@(x)numel(x),xx))},real(T),'Linewidth',3,'Color','k'); 
             else
-                plot(fftshift(xx.values{getOutput(@max,2,cellfun(@(x)numel(x),xx.values))}),fftshift(real(T)),'Linewidth',3,'Color','k'); 
+                plot(fftshift(xx{getOutput(@max,2,cellfun(@(x)numel(x),xx))}),fftshift(real(T)),'Linewidth',3,'Color','k'); 
             end
             xlabel('t_x','Fontsize',16); ylabel('Probability','Fontsize',16); 
             ylim([0 1]); xlim([0 ceil(numel(T)./2)]); grid on
@@ -329,7 +361,7 @@ end
 if nargout == 2
     for ii = 1 : numel( Out_SZ );
         dx = diff(Lims(ii,:))./(Out_SZ);
-        xx.values{ii} = (Lims(ii,1) + dx/2):dx:(Lims(ii,2));
+        xx{ii} = (Lims(ii,1) + dx/2):dx:(Lims(ii,2));
     end
 end
 
