@@ -121,7 +121,6 @@ end
 if exist('A2','var') && numel(A2) > 0
     if all(size(A1) == size(A2))
         if any(A1(:)~=A2(:)) param.auto = false; end
-        
     else error('The size of the input signals are not the same.'); end
 end
 
@@ -398,4 +397,15 @@ fA(:) = ifftn( fA );
 
 if all(realvals) fA(:) = real(fA); end;
 
+
+end
+%%
+function varargout = getOutput(func,outputNo,varargin)
+% A function that selectively chooses the output of another function.
+% func - function handle
+% Outputnp - is the output index of interest
+% varargin - the inputs to the function
+    varargout = cell(max(outputNo),1);
+    [varargout{:}] = func(varargin{:});
+    varargout = varargout(outputNo);
 end
