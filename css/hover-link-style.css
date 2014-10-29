@@ -1,0 +1,27 @@
+.wrapper { position:relative;}
+
+.header-link {
+  position: absolute;
+  left: -1%;
+  opacity: 0;
+
+  -webkit-transition: opacity 0.2s ease-in-out 0.1s;
+  -moz-transition: opacity 0.2s ease-in-out 0.1s;
+  -ms-transition: opacity 0.2s ease-in-out 0.1s;
+}
+
+h2:hover .header-link,
+h3:hover .header-link,
+h4:hover .header-link,
+h5:hover .header-link,
+h6:hover .header-link {
+  opacity: 1;
+}
+
+.notebook-bg {background-color:white;
+    background-image: linear-gradient(rgba(34, 102, 153, .075) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(34, 102, 153, .075) 2px, transparent 2px),
+    linear-gradient(rgba(34, 102, 153,.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 102, 153,.075) 1px, transparent 1px);
+    background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;}
