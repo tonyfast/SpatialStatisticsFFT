@@ -15,6 +15,8 @@ Getting Started
   url = 'https://farm3.staticflickr.com/2397/12972389405_223298503d_z.jpg';
   [F,xx] = SpatialStatsFFT(url);
   ```
+  
+  > You will recieve an alert that the raw image has been stored in your Matlab workspace.
 
 Other Images
 ============
