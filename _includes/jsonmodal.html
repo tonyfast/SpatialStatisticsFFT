@@ -1,0 +1,20 @@
+<div class="modal fade" id="jsonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">JSON Front Matter</h4>
+        <i>Copy and Paste this text to use it in <a href="https://github.com/Materials-Informatics-Lab/research-pages/wiki/Reading-JSON#matlab">Matlab</a>
+          or <a href="https://github.com/Materials-Informatics-Lab/research-pages/wiki/Reading-JSON#python">Python</a></i>.
+      </div>
+      <div class="modal-body">
+        {% include frontmatter.html %}
+      </div>
+      <div class="modal-footer">
+        <i style="float:left;">If the JSON cannot be loaded then there may be a problem with some <a href="https://github.com/Materials-Informatics-Lab/research-pages/wiki/Escaping-Characters-in-YAML-and-JSON">escape characters</a>.</i>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="Clip" data-clipboard-target="#jsonclip" class="btn btn-primary"><span class="octicon octicon-clippy"></span></button>-->
+      </div>
+    </div>
+  </div>
+</div>

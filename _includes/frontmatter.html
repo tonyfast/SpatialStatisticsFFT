@@ -1,0 +1,10 @@
+{% assign trunc=',"next"' %}
+{% assign layout=page.layout %}
+{% if layout == "page" %}
+{% assign trunc=',"content"' %}
+{% endif %}
+{% capture json %}
+{{page | jsonify }}
+{% endcapture %}
+{% assign call = json | split:trunc %}
+<div class="well"><pre>{{call[0] | replace:'\n','\\\n' }}}</pre></div>
