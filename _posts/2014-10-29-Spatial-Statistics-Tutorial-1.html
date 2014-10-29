@@ -1,0 +1,167 @@
+---
+layout: post
+author: tonyfast
+tagline: >
+    Small Systems with computable numbers
+
+title: >
+    1. Itty-Bitty Spatial Statistics
+   
+---
+
+## Overview of Tutorial #1
+
+This post explores simple examples of spatial statistics that can be computed by hand.
+
+We will focus on:
+
+* How Values in Spatial Statistics are Computed.
+* The Effects of Periodicity and Otherwise.
+
+All of the code outputs are from [``StatsSanityCheck.m``](#).
+
+## The Delta Microstructure
+
+The delta microstructure is a sufficient condition for a heterogenous medium.  One voxel
+in a spatial rending is not the same as the others.
+
+{% comment %}Matlab Output{% endcomment %}
+{% highlight Matlab %}
+Image
+     0     0     0     0     0
+     0     0     0     0     0
+     0     0     1     0     0
+     0     0     0     0     0
+     0     0     0     0     0
+
+Spatial Statistics
+          NaN           -2           -1            0            1            2
+           -2            0            0            0            0            0
+           -1            0            0            0            0            0
+            0            0            0         0.04            0            0
+            1            0            0            0            0            0
+            2            0            0            0            0            0
+{% endhighlight %}
+
+## The Vertical Structure
+
+The vertical structure introduces heterogenity in a single direction and a periodic structure.
+
+{% comment %}Matlab Output{% endcomment %}
+{% highlight Matlab %}
+Image
+     0     0     1     0     0
+     0     0     1     0     0
+     0     0     1     0     0
+     0     0     1     0     0
+     0     0     1     0     0
+
+Spatial Statistics
+          NaN           -2           -1            0            1            2
+           -2            0            0          0.2            0            0
+           -1            0            0          0.2            0            0
+            0            0            0          0.2            0            0
+            1            0            0          0.2            0            0
+            2            0            0          0.2            0            0
+{% endhighlight %}
+
+## A Perturbed Vertical Structure
+
+Toggle a single voxel in the Vertical image to make it a non-periodic heterogenous medium.
+
+{% comment %}Matlab Output{% endcomment %}
+{% highlight Matlab %}
+Image
+     0     0     1     0     0
+     0     0     0     0     0
+     0     0     1     0     0
+     0     0     1     0     0
+     0     0     1     0     0
+
+Spatial Statistics :: Non-Periodic
+          NaN           -2           -1            0            1            2
+           -2            0            0      0.13333            0            0
+           -1            0            0          0.1            0            0
+            0            0            0         0.16            0            0
+            1            0            0          0.1            0            0
+            2            0            0      0.13333            0            0
+
+(Special Case) Spatial Statistics :: Periodic
+          NaN           -2           -1            0            1            2
+           -2  -4.3914e-18   1.1497e-17         0.12   1.1497e-17  -4.3914e-18
+           -1  -4.3914e-18   1.1497e-17         0.12   1.1497e-17  -4.3914e-18
+            0  -4.3914e-18   1.1497e-17         0.16   1.1497e-17  -4.3914e-18
+            1  -4.3914e-18   1.1497e-17         0.12   1.1497e-17  -4.3914e-18
+            2  -4.3914e-18   1.1497e-17         0.12   1.1497e-17  -4.3914e-18
+{% endhighlight %}           
+
+## A Diagonal Structure
+
+And over the Flatworld.. The prior examples could have been treated as linear examples.
+The diagonal structure mixes things up giving us statistics in many dimensions.
+
+{% comment %}Matlab Output{% endcomment %}
+{% highlight Matlab %}
+Image
+     1     0     0     0     0
+     0     1     0     0     0
+     0     0     1     0     0
+     0     0     0     1     0
+     0     0     0     0     1
+
+Spatial Statistics :: Non-Periodic
+          NaN           -2           -1            0            1            2
+           -2      0.33333            0            0            0            0
+           -1            0         0.25            0            0            0
+            0            0            0          0.2            0            0
+            1            0            0            0         0.25            0
+            2            0            0            0            0      0.33333
+
+(Special Case) Spatial Statistics :: Periodic
+          NaN           -2           -1            0            1            2
+           -2          0.2            0            0  -1.4211e-17            0
+           -1  -1.4211e-17          0.2            0            0            0
+            0            0            0          0.2            0            0
+            1            0            0            0          0.2  -1.4211e-17
+            2            0  -1.4211e-17            0            0          0.2
+{% endhighlight %}     
+
+## Cross Correlations
+
+Spatial Statistics are nearly infinite in the relationships that can be computed.  _Sure, not all of them are useful._
+In this section, we look at the cross correlation of the [Diagonal Structure] and the [Perturbed Vertical Structure].
+
+{% comment %}Matlab Output{% endcomment %}
+{% highlight Matlab %}
+Image :: Head
+     0     0     1     0     0
+     0     0     0     0     0
+     0     0     1     0     0
+     0     0     1     0     0
+     0     0     1     0     0
+
+Image :: Tail
+     1     0     0     0     0
+     0     1     0     0     0
+     0     0     1     0     0
+     0     0     0     1     0
+     0     0     0     0     1
+
+Spatial Statistics :: Non-Periodic
+          NaN           -2           -1            0            1            2
+           -2      0.11111     0.083333     0.066667    3.271e-18            0
+           -1   -2.313e-18       0.0625         0.05       0.0625    2.313e-18
+            0     0.066667            0         0.04         0.05     0.066667
+            1            0       0.0625  -2.7756e-18       0.0625     0.083333
+            2            0   -3.271e-18     0.066667            0      0.11111
+
+(Special Case) Spatial Statistics :: Periodic
+          NaN           -2           -1            0            1            2
+           -2         0.04         0.04         0.04         0.04            0
+           -1            0         0.04         0.04         0.04         0.04
+            0         0.04            0         0.04         0.04         0.04
+            1         0.04         0.04  -7.1054e-18         0.04         0.04
+            2         0.04         0.04         0.04            0         0.04
+{% endhighlight %}    
+
+## Next: Visual Inspection of Spatial Statistics <span class="mega-octicon octicon-chevron-right"></span>
