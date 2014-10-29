@@ -1,0 +1,24 @@
+# Site settings
+# Enter your own credentials here
+title: "My Blog"
+email: you@somewhere.com
+description: >
+  Tell us about your site
+baseurl: "/SpatialStatisticsFFT" # replace ``/research-pages`` with the name of the parents repository
+url: "tonyfast.github.io" # replate ``Materials-Informatics-Lab`` with your Github username
+twitter_username: docfast
+disqus: tonyfast
+
+# Build settings
+markdown: kramdown
+
+# Pagination of Posts efficiently organizes posts
+# Using Pagination in Jekyll here: http://jekyllrb.com/docs/pagination/
+paginate: 5
+
+
+gh:
+  user: tonyfast
+  repo: SpatialStatisticsFFT
+  # Branch hosting Github pages
+  branch: gh-pages
