@@ -1,0 +1,68 @@
+---
+layout: post
+author: tonyfast
+tagline: >
+    Spatial Statistics in Practice
+
+title: >
+    3. Spatial Statistics on Real Data
+   
+data:
+- https://farm6.staticflickr.com/5613/15039346854_e228fc7c36_o.jpg #synthetic data
+
+imgs:
+- https://www.flickr.com/photos/tonyfast/15039346854/ #Synthetic structure
+- https://www.flickr.com/photos/tonyfast/15474851600/ #URL stats
+- https://www.flickr.com/photos/tonyfast/15473781849/
+- https://www.flickr.com/photos/tonyfast/15039678434
+---
+
+## Overview of Tutorial #3
+
+This post uses real data to compute spatial statistics.
+
+We will focus on:
+
+* Data on Web
+* The Balance between Visualization and Computing
+* Multi-modal Data
+
+All of the code outputs are from [``StatsReal.m``](#).
+
+## Real Data Lives on Web
+
+This spatial statistics code can be executed from a URL.  It
+
+* Assumes a binary dataset
+* Saves the variable to workspace.
+
+Using our synthetic structure 
+
+{% assign url = {{page.imgs[0]}} %}
+{% include embedly.html url=url %}
+
+We can find the [original data file]({{page.data[0]}}) and execute the following script
+
+{% highlight Matlab %}
+url = '{{page.data[0]}}'
+[ F, xx ] = SpatialStatsFFT( url );
+{% endhighlight %}
+
+{% assign url = {{page.imgs[1]}} %}
+{% include embedly.html url=url %}
+
+> [Does this look right?](http://tonyfast.com/SpatialStatisticsFFT/2014/10/29/Spatial-Statistics-Tutorial-2.html#real-ish-data)
+
+## Reference Phase Matters
+
+Comparison of Spatial Statistics using different reference phases.
+
+{% assign url = {{page.imgs[2]}} %}
+{% include embedly.html url=url %}
+
+
+{% assign url = {{page.imgs[3]}} %}
+{% include embedly.html url=url %}
+
+
+

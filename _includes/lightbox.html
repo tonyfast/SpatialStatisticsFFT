@@ -1,0 +1,13 @@
+<script src="{{"/javascript/lightbox.min.js" | prepend: site.baseurl}}" type="text/javascript"></script>
+<link rel="stylesheet" href="{{ "/css/lightbox.css" | prepend: site.baseurl }}">
+
+<script>
+$( document ).ready(function() {
+  $('.post img').each( function(d,i){
+    $(this)
+      .wrap( '<a href="' + $(this).attr("src") +
+          '" data-title="'+$(this).attr("alt")+'" data-lightbox="post-img"></a>')
+    });
+});
+
+</script>
