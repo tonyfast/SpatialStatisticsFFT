@@ -96,6 +96,7 @@ if ischar( A1 );
     
     % Save a local variable for the spatial statistics
     A1 = round( evalin( 'base', sprintf( '%s.data',varnm) )./255 );
+
     
     % Alert user of the new workspace variable
     disp( ...
